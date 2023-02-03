@@ -28,3 +28,20 @@ const client = await createConnection();
 app.listen(PORT, () => {
   console.log(`Server is Running at ${PORT}`);
 });
+
+// API for HomePage
+app.get('/', async function(req,res){
+    res.send(`Welcome to Student-Mentor API`);
+})
+
+// API for get all list of student
+app.get('/allstudent', async function(req, res){
+     const data = await client .db("Class").collection("students").find({}).toArray();
+     res.send(data);
+})
+
+// API for get all list of Mentor
+app.get('/allmentor', async function(req, res){
+    const data = await client .db("Class").collection("mentors").find({}).toArray();
+    res.send(data);
+})
