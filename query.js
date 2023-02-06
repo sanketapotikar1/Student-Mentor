@@ -1,5 +1,6 @@
 // Query for Student-Mentor API
 
+import { ObjectId } from "mongodb";
 
 // Insert Data into student database
 db.students.insertMany([
@@ -35,4 +36,43 @@ db.mentors.insertMany([
   },
 ]);
 
-//
+//query for update students list in mentor databasse.
+db.mentors.updateOne(
+  { _id: ObjectId("63dd61da31567606dcf6b2f0") },
+  {
+    $set: {
+      students: ["63dd61cf31567606dcf6b2ed", "63dd61cf31567606dcf6b2ee"],
+    },
+  }
+);
+
+// query for update Mentor for perticular student
+db.students.updateOne(
+  {
+    _id: ObjectId("63dd61cf31567606dcf6b2ef"),
+  },
+  {
+    $set: { mentor: ObjectId("63dd61da31567606dcf6b2f1") },
+  }
+);
+
+// lookup query for get all student list for perticular mentor
+db.mentors.aggregate([
+  {
+    $lookup: {
+      from: "students",
+      localField: "_id",
+      foreignField: "mentor",
+      as: "student_list",
+    },
+  },
+  {
+    $unwind: "$student_list",
+  },
+  {
+    $project: {
+      _id: 0,
+      "student_list.student_name": 1,
+    },
+  },
+]);
