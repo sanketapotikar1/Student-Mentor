@@ -113,14 +113,24 @@ app.put("/assignmentor/:id", async function (req, res) {
 
 //API for all student for one mentor
 app.get("/allstudentofmentor/:id", async function (req, res) {
-
   let MentorID = ObjectId(req.params.id);
 
-  const data = await client
-    .db("Class")
-    .collection("mentors")
-    .findOne({ _id: MentorID }, { projection: { _id: 0, students: 1 } });
-
-  res.send(data);
+  try {
+    const data = await client
+      .db("Class")
+      .collection("mentors")
+      .findOne({ _id: MentorID }, { projection: { _id: 0, students: 1 } });
+    res.send({
+      message: 200,
+      message: `data recived sucessfully`,
+      data: data,
+    });
+  } catch (error) {
+    console.log(error);
+    res.send({
+      statuscode: 500,
+      message: `Internal Server Error`,
+      error,
+    });
+  }
 });
-// db.students.find({_id : ObjectId("63dd61cf31567606dcf6b2ee")},{_id : 0,"student_name": 1})
