@@ -2,11 +2,13 @@
 
 import express from "express";
 import { MongoClient, ObjectId } from "mongodb";
+import dotenv from "dotenv";
 
 // PORT declaration
 const PORT = process.env.PORT || 5000;
 
 const app = express();
+dotenv.config();
 
 // Middleware function for JSON data
 app.use(express.json());
