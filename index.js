@@ -14,8 +14,9 @@ dotenv.config();
 app.use(express.json());
 
 // Local Mongodb URL
-const MONGO_URL = `mongodb://127.0.0.1`; // node.js - 16 +
+// const MONGO_URL = `mongodb://127.0.0.1`; // node.js - 16 +
 // const MONGO_URL = "mongodb+srv://sanket:admin123@cluster0.iavuebx.mongodb.net/"; // Atlas link for mongodb
+const MONGO_URL = "mongodb+srv://sanket:admin123@cluster0.iavuebx.mongodb.net/?retryWrites=true&w=majority";
 
 //code for Mongo connection
 async function createConnection() {
